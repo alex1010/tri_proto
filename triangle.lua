@@ -12,7 +12,7 @@ local bv = Vector2d.new(0, 1)
 local cv = Vector2d.new(sq3/2, -0.5)
 
 function triangle:delta()
-	return a / sq3 + s
+	return self.a / sq3 + self.s
 end
 
 function triangle:center(i, j)
@@ -41,8 +41,8 @@ function triangle:vertices(i, j)
 	local vectors = { av:scale(sign), bv:scale(sign), cv:scale(sign) }
 	local result = {}
 	for _, vector in ipairs(vectors) do
-		table.insert(result, vector.x)
-		table.insert(result, vector.y)
+		table.insert(result, vector.x * R)
+		table.insert(result, vector.y * R)
 	end
 	return result
 end
