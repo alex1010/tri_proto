@@ -48,7 +48,15 @@ function triangle:vertices(i, j)
 end
 
 function triangle:neighbors(i, j)
-
+	local n1 = { i+1, j }
+	local n2 = { i-1, j }
+	local n3 = { i }
+	if self:orientation(i, j) then
+		n3[2] = j + 1
+	else
+		n3[2] = j - 1
+	end
+	return { n1, n2, n3 }
 end
 
 
