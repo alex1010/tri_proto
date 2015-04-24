@@ -1,5 +1,6 @@
 local Vector2d = require "Vector2d"
 local triangle = require "triangle"
+local widget = require "widget"
 
 local gr = display.newGroup()
 gr.x, gr.y = display.contentCenterX, display.contentCenterY
@@ -15,6 +16,20 @@ local colors = {
 	["green"] = { 0.0, 1.0, 0.0 },
 	["blue"] = { 0.0, 0.0, 1.0 }
 }
+
+local points = {
+	[{3, 4}] = "red",
+	[{2, 2}] = "blue",
+	[{-3, 1}] = "green",
+	[{-4, 1}] = "red"
+}
+
+function displayPoints()
+	for point, colorName in pairs(points) do
+		local c = triangle:center(unpack(point))
+		display.newCircle(gr, c.x, c.y, 10):setFillColor(unpack(colors[colorName]))
+	end
+end
 
 function hasTriangle(i, j)
 	local v = Vector2d.new(i, j)
@@ -61,7 +76,32 @@ function drawTriangle(i, j, color)
 		})
 end
 
+widget.newButton {
+	label = "Left",
+	x = 80,
+	y = 30,
+	fontSize = 48,
+	onRelease = function()
+		gr.rotation = gr.rotation + 30
+	end
+}
+
+widget.newButton {
+	x = 500,
+	y = 30,
+	fontSize = 48,
+	label = "Right",
+	onRelease = function()
+		gr.rotation = gr.rotation - 30
+	end
+}
+
+displayPoints()
 drawTriangle(3, 3, "red")
+local ttc = triangle:center(3, 3)
+display.newCircle(gr, ttc.x, ttc.y, 5)
 drawTriangle(3, 2, "green")
+local ttc2 = triangle:center(3, 2)
+display.newCircle(gr, ttc2.x, ttc2.y, 5)
 drawTriangle(0, 0, "blue")
 
